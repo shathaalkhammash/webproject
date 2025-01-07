@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover </title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="interactive-navbar">
+            <div class="nav-logo">
+                <img src="logo.png" alt="TV Time">
+                <span>TV Time</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="tvtimepro.html"><i class="fas fa-tv"></i> My Shows</a></li>
+                <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-adjust"></i></button>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover - TVTime Clone</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #333;
+      color: #f4f4f4;
+    }
+
+    .discover-page {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #search-bar {
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .show-of-the-day {
+      background-color: #444;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .show-of-the-day img {
+      width: 150px;
+      height: auto;
+      border-radius: 10px 0 0 10px;
+    }
+
+    .show-of-the-day-content {
+      padding: 20px;
+    }
+
+    .show-of-the-day-content h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      color: white;
+    }
+
+    .show-of-the-day-content p {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .filters {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .filters button {
+      padding: 10px 15px;
+      background-color: orangered;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .filters button.active {
+      font-weight: bold;
+    }
+
+    .filters button:hover {
+      background-color: darkorange;
+    }
+
+    .show-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .show-card {
+      background: #444;
+      border: 1px solid #555;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .show-card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .show-card h3 {
+      margin: 10px 0;
+      font-size: 18px;
+      color: orangered;
+    }
+
+    .show-card p {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 5px;
+    }
+
+    .pagination button {
+      padding: 8px 12px;
+      border: none;
+      background-color: #555;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .pagination button.active {
+      background-color: orangered;
+    }
+
+    .pagination button:hover {
+      background-color: darkorange;
+    }
+  </style>
+</head>
+<body>
+  <div class="discover-page">
+    <header>
+      <h1>Discover</h1>
+      <input type="text" id="search-bar" placeholder="Search for shows...">
+    </header>
+
+    <section class="show-of-the-day" id="show-of-the-day">
+      <!-- Show of the Day will be dynamically populated here -->
+    </section>
+
+    <section class="filters">
+      <button data-filter="all" class="active">All</button>
+      <button data-filter="action">Action</button>
+      <button data-filter="drama">Drama</button>
+      <button data-filter="comedy">Comedy</button>
+    </section>
+
+    <section class="show-list" id="show-list">
+      <!-- Show cards will be dynamically populated here -->
+    </section>
+
+    <section class="pagination" id="pagination">
+      <!-- Pagination buttons will be dynamically populated here -->
+    </section>
+  </div>
+
+  <script>
+    const shows = [
+    { title: "Breaking Bad", genre: "drama", image: "img/breaking bad.jpeg" },
+      { title: "The Office", genre: "comedy", image: "img/the_office.jpeg" },
+      { title: "Game of Thrones", genre: "action", image: "img/game_of_thrones.jpeg" },
+      { title: "Stranger Things", genre: "drama", image: "img/stranger_things.jpeg" },
+      { title: "Friends", genre: "comedy", image: "img/friends.jpg" },
+      { title: "beef", genre: "comedy", image: "img/beef.jpeg" },
+      { title: "barbie", genre: "comedy", image: "img/barbie.jpeg" },
+      { title: "gilmore girls", genre: "comedy", image: "img/gilmore_girls.jpeg" },
+      { title: "the bear", genre: "drama", image: "img/the bear.jpeg" },
+      { title: "girl from nowhere", genre: "drama", image: "img/girl_from_nowhere.jpeg" },
+      { title: "american_horror_story", genre: "horror", image: "img/american_horror_story.jpeg" },
+      { title: "arrow", genre: "action", image: "img/arrow.jpeg" },
+      { title: "avengers", genre: "action", image: "img/avengers.jpeg" },
+      { title: "brooklyn nine-nine", genre: "comedy", image: "img/b99.jpeg" },
+      { title: "cable girls", genre: "drama", image: "img/Cablegirls.jpg" },
+      { title: "sherlock", genre: "drama", image: "img/sherlock.jpg" },
+      { title: "the walking dead", genre: "drama", image: "img/the walking.jpg" },
+      { title: "corpse bride", genre: "drama", image: "img/corpse_bride.jpeg" },
+      { title: "criminal minds", genre: "drama", image: "img/criminal_minds.jpeg" },
+      { title: "the witcher", genre: "action", image: "img/the_witcher.jpg" },
+
+    ];
+
+    const showList = document.getElementById("show-list");
+    const searchBar = document.getElementById("search-bar");
+    const pagination = document.getElementById("pagination");
+    const showOfTheDayContainer = document.getElementById("show-of-the-day");
+    const itemsPerPage = 6;
+    let currentPage = 1;
+
+    function displayShowOfTheDay() {
+      const randomIndex = Math.floor(Math.random() * shows.length);
+      const randomShow = shows[randomIndex];
+      showOfTheDayContainer.innerHTML = `
+        <img src="${randomShow.image}" alt="${randomShow.title}">
+        <div class="show-of-the-day-content">
+          <h2>Show of the Day: ${randomShow.title}</h2>
+          <p>Genre: ${randomShow.genre}</p>
+        </div>
+      `;
+    }
+
+    function displayShows(filter = "all", page = 1) {
+      showList.innerHTML = "";
+      const filteredShows = filter === "all" 
+        ? shows 
+        : shows.filter(show => show.genre === filter);
+
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = page * itemsPerPage;
+
+      filteredShows.slice(startIndex, endIndex).forEach(show => {
+        const showCard = document.createElement("div");
+        showCard.className = "show-card";
+        showCard.innerHTML = `
+          <img src="${show.image}" alt="${show.title}">
+          <h3>${show.title}</h3>
+          <p>${show.genre}</p>
+        `;
+        showList.appendChild(showCard);
+      });
+
+      createPagination(filteredShows.length, page);
+    }
+
+    function createPagination(totalItems, currentPage) {
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      pagination.innerHTML = "";
+
+      for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement("button");
+        button.textContent = i;
+        button.className = i === currentPage ? "active" : "";
+        button.addEventListener("click", () => {
+          const activeFilter = document.querySelector(".filters button.active")?.getAttribute("data-filter") || "all";
+          displayShows(activeFilter, i);
+        });
+        pagination.appendChild(button);
+      }
+    }
+
+    document.querySelectorAll(".filters button").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".filters button").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        currentPage = 1;
+        displayShows(button.getAttribute("data-filter"), currentPage);
+      });
+    });
+
+    searchBar.addEventListener("input", (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      const filteredShows = shows.filter(show => show.title.toLowerCase().includes(searchTerm));
+      currentPage = 1;
+      showList.innerHTML = "";
+
+      filteredShows.slice(0, itemsPerPage).forEach(show => {
+        const showCard = document.createElement("div");
+        showCard.className = "show-card";
+        showCard.innerHTML = `
+          <img src="${show.image}" alt="${show.title}">
+          <h3>${show.title}</h3>
+          <p>${show.genre}</p>
+        `;
+        showList.appendChild(showCard);
+      });
+
+      createPagination(filteredShows.length, currentPage);
+    });
+
+    displayShowOfTheDay();
+    displayShows();
+  </script>
+</body>
+</html>
+
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 TV Time Clone. All rights reserved.</p>
+    </footer>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+    </script>
+</body>
+</html>

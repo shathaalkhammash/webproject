@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1f1f1f;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #ff9900;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        nav a:hover {
+            color: #e68a00;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 40px;
+        }
+
+        .profile-photo-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #2c2c2c;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        #profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #profile-upload {
+            display: none;
+        }
+
+        .edit-photo-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-photo-btn:hover {
+            background-color: #e68a00;
+        }
+
+        /* Profile Info */
+        .profile-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .profile-info p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            max-width: 500px;
+            color: #f4f4f4;
+        }
+
+        .edit-button {
+            margin-top: 15px;
+            background-color: #ff9900;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-button:hover {
+            background-color: #e68a00;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .section h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .show-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .show-card {
+            background-color: #1f1f1f;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .show-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .show-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+ ```html
+        }
+
+        .show-card h3 {
+            color: #fff;
+            padding: 15px 10px;
+            font-size: 1.5rem;
+            background-color: #ff9900;
+        }
+
+        .add-show-btn {
+            background-color: #ff9900;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            margin-top: 20px;
+        }
+
+        .add-show-btn:hover {
+            background-color: #e68a00;
+        }
+
+        /* Show Discover Modal */
+        .discover-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .discover-modal-content {
+            background-color: #1f1f1f;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .discover-show {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .discover-show:hover {
+            background-color: #2c2c2c;
+        }
+
+        .discover-show img {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .close-modal {
+            background-color: #ff9900;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .close-modal:hover {
+            background-color: #e68a00;
+        }
+
+        /* Edit Profile Form */
+        .edit-profile-form {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .edit-profile-form input {
+            padding: 10px;
+            font-size: 1rem;
+            margin: 5px;
+            width: 250px;
+        }
+
+        .edit-profile-form button {
+            background-color: #ff9900;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-form button:hover {
+            background-color: #e68a00;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="interactive-navbar">
+            <div class="nav-logo">
+                <img src="img/tv logo.jpg" alt="TV Time">
+                <span>TV Time</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="tvtimepro.html"><i class="fas fa-tv"></i> My Shows</a></li>
+                <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-adjust"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="profile-container">
+        <div class="profile-photo-container">
+            <img id="profile-photo" src="img/pfp.png" alt="Profile Photo">
+            <input type="file" id="profile-upload" onchange="previewImage()" />
+            <button id="edit-photo-btn" class="edit-photo-btn" onclick="document.getElementById('profile-upload').click();">+</button>
+        </div>
+
+        <div class="profile-info">
+            <h2 id="profile-name">John Doe</h2>
+            <p id="bio">Lover of TV shows. Always watching something new.</p>
+            <button id="edit-button" class="edit-button" onclick="toggleEditProfileForm()">Edit Profile</button>
+        </div>
+
+        <div class="edit-profile-form" id="edit-profile-form">
+            <input type="text" id="edit-name" placeholder="Edit Name">
+            <input type="text" id="edit-bio" placeholder="Edit Bio">
+            <button onclick="saveProfile()">Save</button>
+        </div>
+
+        <div class="section">
+            <h3>Currently Watching</h3>
+            <div class="show-list" id="currently-watching-list"></div>
+            <button class="add-show-btn" onclick="openDiscoverModal('currently-watching-list')">Add Show</button>
+        </div>
+
+        <div class="section">
+            <h3>Favorites</h3>
+            <div class="show-list" id="favorites-list"></div>
+            <button class="add-show-btn" onclick="openDiscoverModal('favorites-list')">Add Show</button>
+        </div>
+    </div>
+
+    <div class="discover-modal" id="discover-modal">
+        <div class="discover-modal-content">
+            <div class="discover-show" onclick="addShow('Arrow', 'img/arrow.jpeg')">
+                <div class="discover-modal-content">
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Arrow', 'img/arrow.jpeg')">
+                        <img src="img/arrow.jpeg" alt="Arrow">
+                        <span>Arrow</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Sherlock', 'img/sherlock.jpg')">
+                        <img src="img/sherlock.jpg" alt="Sherlock">
+                        <span>Sherlock</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Breaking Bad', 'img/breaking bad.jpeg')">
+                        <img src="img/breaking bad.jpeg" alt="Breaking Bad">
+                        <span>Breaking Bad</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Loki', 'img/loki.jpg')">
+                        <img src="img/loki.jpg" alt="Loki">
+                        <span>Loki</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Adventure Time', 'img/adventuretime.jpeg')">
+                        <img src="img/adventuretime.jpeg" alt="Adventure Time">
+                        <span>Adventure Time</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'American Horror Story', 'img/American_Horror_Story.jpeg')">
+                        <img src="img/American_Horror_Story.jpeg" alt="American Horror Story">
+                        <span>American Horror Story</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Avengers', 'img/avengers.jpeg')">
+                        <img src="img/avengers.jpeg" alt="Avengers">
+                        <span>Avengers</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Brooklyn Nine-Nine', 'img/b99.jpeg')">
+                        <img src="img/b99.jpeg" alt="Brooklyn Nine-Nine">
+                        <span>Brooklyn Nine-Nine</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Barbie', 'img/barbie.jpeg')">
+                        <img src="img/barbie.jpeg" alt="Barbie">
+                        <span>Barbie</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Beef', 'img/beef.jpeg')">
+                        <img src="img/beef.jpeg" alt="Beef">
+                        <span>Beef</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Cable Girls', 'img/Cablegirls.jpg')">
+                        <img src="img/Cablegirls.jpg" alt="Cable Girls">
+                        <span>Cable Girls</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Corpse Bride', 'img/corpse_bride.jpeg')">
+                        <img src="img/corpse_bride.jpeg" alt="Corpse Bride">
+                        <span>Corpse Bride</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Criminal Minds', 'img/criminal_minds.jpeg')">
+                        <img src="img/criminal_minds.jpeg" alt="Criminal Minds">
+                        <span>Criminal Minds</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Friends', 'img/friends.jpg')">
+                        <img src="img/friends.jpg" alt="Friends">
+                        <span>Friends</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Girl from Nowhere', 'img/girl_from_nowhere.jpeg')">
+                        <img src="img/girl_from_nowhere.jpeg" alt="Girl from Nowhere">
+                        <span>Girl from Nowhere</span>
+                    </div>
+                    <div class="discover -show" onclick="addShow(window.currentListId, 'Gilmore Girls', 'img/gilmore_girls.jpeg')">
+                        <img src="img/gilmore_girls.jpeg" alt="Gilmore Girls">
+                        <span>Gilmore Girls</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'The Office', 'img/the_office.jpeg')">
+                        <img src="img/the_office.jpeg" alt="The Office">
+                        <span>The Office</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'The Bear', 'img/the bear.jpeg')">
+                        <img src="img/the bear.jpeg" alt="The Bear">
+                        <span>The Bear</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'The Witcher', 'img/the_witcher.jpg')">
+                        <img src="img/the_witcher.jpg" alt="The Witcher">
+                        <span>The Witcher</span>
+                    </div>
+                    <div class="discover-show" onclick="addShow(window.currentListId, 'Game of Thrones', 'img/game_of_thrones.jpeg')">
+                        <img src="img/game_of_thrones.jpeg" alt="Game of Thrones">
+                        <span>Game of Thrones</span>
+                    </div>
+                    <button class="close-modal" onclick="closeDiscoverModal()">Close</button>
+                </div> 
+                    </div>
+                </div>
+            <button class="close-modal" onclick="closeDiscoverModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        let currentProfilePhoto = 'img/pfp.png';
+        let currentListId;
+
+        function previewImage() {
+            const file = document.getElementById('profile-upload').files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profile-photo').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function toggleEditProfileForm() {
+            const form = document.getElementById('edit-profile-form');
+            form.style.display = form.style.display === 'none' || !form.style.display ? 'block' : 'none';
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('edit-name').value;
+            const bio = document.getElementById('edit-bio').value;
+            document.getElementById('profile-name').textContent = name || document.getElementById('profile-name').textContent;
+            document.getElementById('bio').textContent = bio || document.getElementById('bio').textContent;
+            toggleEditProfileForm();
+        }
+
+        function openDiscoverModal(listId) {
+            window.currentListId = listId;
+            document.getElementById('discover-modal').style.display = 'flex';
+        }
+
+        function closeDiscoverModal() {
+            document.getElementById('discover-modal').style.display = 'none';
+        }
+
+        function addShow(listId, showName, showImage) {
+            const list = document.getElementById(listId);
+            const showCards = list.getElementsByClassName('show-card');
+            for (let card of showCards) {
+                if (card.querySelector('h3').innerText === showName) {
+                    alert('This show is already in your list!');
+                    return;
+                }
+            }
+
+            const showCard = document.createElement('div');
+            showCard.classList.add('show-card');
+            showCard.innerHTML = `
+                <img src="${showImage}" alt="${showName}">
+                <h3>${showName}</h3>
+            `;
+            list.appendChild(showCard);
+            closeDiscoverModal();
+        }
+    </script>
+</body>
+</html>
